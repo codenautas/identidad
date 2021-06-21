@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "outDir": "../../dist",
+        "module": "UMD",
+        "target": "es2018",
+        "lib":["es2017", "es2015", "es2018"]
+    },
+    "include":[
+        "."
+    ], 
+    "extends": "../../tsconfig-common.json"
+}

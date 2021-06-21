@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "outDir": "../../dist/server",
+        "module": "none",
+        "target": "esnext",
+        "lib":["esnext"],
+        "baseUrl": "",
+        "strict": true
+    },
+    "include":[
+        ".", "../common/"    
+    ], 
+    "extends": "../../tsconfig-common.json"
+}

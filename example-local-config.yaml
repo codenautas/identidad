@@ -1,0 +1,12 @@
+db:
+  port: 54313
+  password: dontask
+  database: identidad_db
+install:
+  table-data-dir:
+    - install-example
+devel:
+  useFileDevelopment: true
+  delay: 400
+  cache-content: true
+  forceShowAsEditable: false      
