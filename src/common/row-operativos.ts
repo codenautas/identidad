@@ -5,7 +5,8 @@ const campos = {
     operativo     : new field.text({}),
     denominacion  : new field.text({}),
     desde         : new field.date({}),
-    hasta         : new field.date({})
+    hasta         : new field.date({}),
+    carta         : new field.text({})
 }
 
 export const operativos = rowDefinition({

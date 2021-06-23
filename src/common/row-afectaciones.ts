@@ -8,7 +8,8 @@ const campos = {
     cuit          : relatedField(personal.field.cuit,{registerAsDetail:{abr:'A'}}),
     desde         : new field.date({}),
     hasta         : new field.date({}),
-    observaciones : new field.text({})
+    observaciones : new field.text({}),
+    idafe         : new field.text({})
 }
 
 export const afectaciones = rowDefinition({

@@ -2,6 +2,8 @@ db:
   port: 54313
   password: dontask
   database: identidad_db
+server:
+  prefix_idafe: dontask
 install:
   table-data-dir:
     - install-example

@@ -11,10 +11,12 @@ import * as BP from "backend-plus";
 import { staticConfigYaml } from "./def-config"
 
 import { tableUsuarios } from "backend-chi";
+import { tableAfectaciones } from "./table-afectaciones";
 
 var table = {
     ...dataSetRow,
-    usuarios: tableUsuarios
+    afectaciones: tableAfectaciones,
+    usuarios: tableUsuarios,
 }
 
 @json4all.addClass
@@ -51,6 +53,15 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
         var {usuarios, parametros, ...resto} = dataSetRow;
         await this.getIncludesFromDataSetRow('node_modules/frontend-chi','common', {usuarios, parametros});
         await this.getIncludesFromDataSetRow(Path.join(__dirname,'../../client'),'common', {...resto});
+    }
+    async verifid({idafe}:{idafe:string}){
+        var afectaciones = await this.getTableData(table.afectaciones, [{fieldName:'idafe', value:idafe}]);
+        return {html:`<h2>${JSON.stringify(afectaciones)}</h2>`}
+    }
+    override getUnloggedServices(){
+        return {
+            verifid:{coreFunction:(params:any)=>this.verifid(params)}
+        }
     }
 }
 

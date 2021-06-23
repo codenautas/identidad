@@ -32,6 +32,8 @@ install:
   dump:
     db:
       owner: identidad_owner
+      extensions:
+      - pgcrypto
     enances: inline
     scripts:
       post-adapt: 

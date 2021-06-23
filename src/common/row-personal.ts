@@ -3,8 +3,8 @@ import {field, rowDefinition} from "backend-chi";
 
 export const campos = {
     cuit          : new field.text({}),
-    nombres       : new field.text({}),
-    apellido      : new field.text({}),
+    nombres       : new field.text({isName:true}),
+    apellido      : new field.text({isName:true}),
     documento_tipo: new field.text({default:'DNI'}),
     documento_nro : new field.text({}),
     telefono      : new field.text({title:'teléfono'}),
