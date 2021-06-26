@@ -13,10 +13,12 @@ import { staticConfigYaml } from "./def-config"
 import { tableUsuarios } from "backend-chi";
 import { tableOperativos } from "./table-operativos";
 import { tableAfectaciones } from "./table-afectaciones";
-import bestGlobals = require("best-globals");
+import { tableNotas } from "./table-notas";
+import * as bestGlobals from "best-globals";
 
 var table = {
     ...dataSetRow,
+    notas: tableNotas,
     operativos: tableOperativos,
     afectaciones: tableAfectaciones,
     usuarios: tableUsuarios,
@@ -64,16 +66,23 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
         var afectaciones = await this.getTableData(table.afectaciones, [{fieldName:'idafe', value:idafe}]);
         return {html:`<h2>${JSON.stringify(afectaciones)}</h2>`}
     }
-    async nota({idope}:{idope:string}){
+    async nota({idnota}:{idnota:string}){
         try{
             var ahora = bestGlobals.date.today();
-            var operativo = await this.getTableData(table.operativos, [{fieldName:'idope', value:idope}]);
-            if(ahora < operativo[0].desde || ahora > operativo[0].hasta){
+            var nota = await this.getTableData(table.notas, [{fieldName:'idnota', value:idnota}]);
+            if(ahora < nota[0].desde || ahora > nota[0].hasta){
                 throw new Error("fuera de rango de fechas");
             }
-            return {html:`<style>#carta{max-width:600px; margin-left:auto; margin-right:auto}</style><div id=carta>${operativo[0].carta}</div>`}
+            return {html:`<!doctype html>
+            <html>
+            <head>
+                <style>#carta{max-width:640px; margin-left:auto; margin-right:auto; padding:20px; border: 0.5px solid blue;}</style>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            </head>
+            <body><div id=carta>\n${nota[0].contenido}
+            </div></body>`}
         }catch(err){
-            console.log('RECURSO NO ENCONTRADO',idope,err)
+            console.log('RECURSO NO ENCONTRADO',idnota,err)
             return this.error404();
         }
     }

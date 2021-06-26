@@ -1,4 +1,5 @@
 import * as json4all from "json4all";
+import {notas} from "./row-notas";
 import {operativos} from "./row-operativos";
 import {afectaciones} from "./row-afectaciones";
 import {personal} from "./row-personal";
@@ -6,6 +7,7 @@ import {usuarios} from "frontend-chi";
 import {parametros} from "frontend-chi";
 
 export const dataSetRow ={
+    notas,
     operativos,
     personal,
     afectaciones,
