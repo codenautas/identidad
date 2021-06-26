@@ -16,12 +16,14 @@ login:
   rolFieldName: rol
   infoFieldList: [usuario, rol]
   activeClausule: activo
+  unloggedLandPage: ""
   plus:
     allowHttpLogin: true
     fileStore: true
     loginForm:
       formTitle: entrada
       formImg: unlogged/tables-lock.png
+    noLoggedUrlPath: /error404
 client-setup:
   menu: true
   lang: es

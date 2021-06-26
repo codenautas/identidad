@@ -1,6 +1,6 @@
 {
   "name": "identidad",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "El QR, la carta y el Id",
   "main": "dist/server/server/server-identidad.js",
   "files": [
@@ -8,7 +8,7 @@
   ],
   "dependencies": {
     "backend-chi": "^0.0.8",
-    "backend-plus": "^1.10.5",
+    "backend-plus": "^1.10.6",
     "best-globals": "~0.10.32",
     "frontend-chi": "^0.0.5",
     "json4all": "^1.1.0",

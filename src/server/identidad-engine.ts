@@ -11,10 +11,13 @@ import * as BP from "backend-plus";
 import { staticConfigYaml } from "./def-config"
 
 import { tableUsuarios } from "backend-chi";
+import { tableOperativos } from "./table-operativos";
 import { tableAfectaciones } from "./table-afectaciones";
+import bestGlobals = require("best-globals");
 
 var table = {
     ...dataSetRow,
+    operativos: tableOperativos,
     afectaciones: tableAfectaciones,
     usuarios: tableUsuarios,
 }
@@ -54,13 +57,31 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
         await this.getIncludesFromDataSetRow('node_modules/frontend-chi','common', {usuarios, parametros});
         await this.getIncludesFromDataSetRow(Path.join(__dirname,'../../client'),'common', {...resto});
     }
+    async error404(){
+        return {html:`<h2>ERROR 404. Recurso no encontrado</h2>`}
+    }
     async verifid({idafe}:{idafe:string}){
         var afectaciones = await this.getTableData(table.afectaciones, [{fieldName:'idafe', value:idafe}]);
         return {html:`<h2>${JSON.stringify(afectaciones)}</h2>`}
     }
+    async nota({idope}:{idope:string}){
+        try{
+            var ahora = bestGlobals.date.today();
+            var operativo = await this.getTableData(table.operativos, [{fieldName:'idope', value:idope}]);
+            if(ahora < operativo[0].desde || ahora > operativo[0].hasta){
+                throw new Error("fuera de rango de fechas");
+            }
+            return {html:`<style>#carta{max-width:600px; margin-left:auto; margin-right:auto}</style><div id=carta>${operativo[0].carta}</div>`}
+        }catch(err){
+            console.log('RECURSO NO ENCONTRADO',idope,err)
+            return this.error404();
+        }
+    }
     override getUnloggedServices(){
         return {
-            verifid:{coreFunction:(params:any)=>this.verifid(params)}
+            error404:{coreFunction:(_:any)     =>this.error404()     },
+            verifid :{coreFunction:(params:any)=>this.verifid (params)},
+            nota    :{coreFunction:(params:any)=>this.nota    (params)}
         }
     }
 }

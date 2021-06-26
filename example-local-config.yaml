@@ -4,6 +4,7 @@ db:
   database: identidad_db
 server:
   prefix_idafe: dontask
+  prefix_idope: dontask
 install:
   table-data-dir:
     - install-example
