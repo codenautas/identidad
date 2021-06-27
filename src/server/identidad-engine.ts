@@ -1,10 +1,14 @@
 import {strict as likeAr} from "like-ar";
 import * as Path from "path"
+import * as QRCode from 'qrcode';
+import * as json4all from "json4all";
+import * as bestGlobals from "best-globals";
+
+
 import {BackendEngine, AppChi, generateTableDefinition} from "backend-chi";
 import {
     IdentidadEngineBase, SessionBase
 } from "../common/info-identidad"
-import * as json4all from "json4all";
 
 import {dataSetRow} from "../common/info-identidad";
 import * as BP from "backend-plus";
@@ -14,7 +18,7 @@ import { tableUsuarios } from "backend-chi";
 import { tableOperativos } from "./table-operativos";
 import { tableAfectaciones } from "./table-afectaciones";
 import { tableNotas } from "./table-notas";
-import * as bestGlobals from "best-globals";
+import { URL, URLSearchParams } from "url";
 
 var table = {
     ...dataSetRow,
@@ -66,7 +70,10 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
         var afectaciones = await this.getTableData(table.afectaciones, [{fieldName:'idafe', value:idafe}]);
         return {html:`<h2>${JSON.stringify(afectaciones)}</h2>`}
     }
-    async nota({idnota}:{idnota:string}){
+    async nota({idnota, url}:{idnota:string, url:string}){
+        var urlObj=new URL(url);
+        urlObj.search = new URLSearchParams([['idnota', idnota]]).toString()
+        var urlStr = urlObj.toString();
         try{
             var ahora = bestGlobals.date.today();
             var nota = await this.getTableData(table.notas, [{fieldName:'idnota', value:idnota}]);
@@ -79,7 +86,10 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
                 <style>#carta{max-width:640px; margin-left:auto; margin-right:auto; padding:20px; border: 0.5px solid blue;}</style>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
             </head>
-            <body><div id=carta>\n${nota[0].contenido}
+            <body><div id=carta>\n${nota[0].contenido.replace(
+                '<div id="auto-qr"></div>',
+                `<a href=${urlStr}><div id="auto-qr"><div><img src="${await QRCode.toDataURL(urlStr)}"/></div><div style="font-size:50%">${urlStr}</div></div></a>`
+            )}
             </div></body>`}
         }catch(err){
             console.log('RECURSO NO ENCONTRADO',idnota,err)
@@ -88,9 +98,9 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
     }
     override getUnloggedServices(){
         return {
-            error404:{coreFunction:(_:any)     =>this.error404()     },
+            error404:{coreFunction:(_:any)     =>this.error404()      },
             verifid :{coreFunction:(params:any)=>this.verifid (params)},
-            nota    :{coreFunction:(params:any)=>this.nota    (params)}
+            nota    :{coreFunction:(params:any)=>this.nota    (params), addParam:{url:true}}
         }
     }
 }
