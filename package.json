@@ -1,16 +1,16 @@
 {
   "name": "identidad",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "El QR, la carta y el Id",
   "main": "dist/server/server/server-identidad.js",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "backend-chi": "^0.1.0",
+    "backend-chi": "^0.1.1",
     "backend-plus": "^1.10.8",
     "best-globals": "~0.10.32",
-    "frontend-chi": "^0.1.0",
+    "frontend-chi": "^0.1.1",
     "json4all": "^1.1.0",
     "like-ar": "^0.3.5",
     "material-styles": "~0.0.7",
@@ -41,6 +41,9 @@
     "pg-promise-strict": "^1.2.4",
     "types.d.ts": "^0.6.3",
     "typescript": "^4.3.4"
+  },
+  "engines": {
+    "node": ">=14.17.0"
   },
   "mixin-patch": {
     "patch": false,
