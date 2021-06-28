@@ -1,6 +1,6 @@
 {
   "name": "identidad",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "El QR, la carta y el Id",
   "main": "dist/server/server/server-identidad.js",
   "files": [

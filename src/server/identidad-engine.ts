@@ -19,6 +19,7 @@ import { tableOperativos } from "./table-operativos";
 import { tableAfectaciones } from "./table-afectaciones";
 import { tableNotas } from "./table-notas";
 import { URL, URLSearchParams } from "url";
+import { promises as fs } from "fs";
 
 var table = {
     ...dataSetRow,
@@ -74,6 +75,7 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
         var urlObj=new URL(url);
         urlObj.search = new URLSearchParams([['idnota', idnota]]).toString()
         var urlStr = urlObj.toString();
+        var banner = await fs.readFile('dist/client/unlogged/img/banner.html', 'utf8')
         try{
             var ahora = bestGlobals.date.today();
             var nota = await this.getTableData(table.notas, [{fieldName:'idnota', value:idnota}]);
@@ -83,10 +85,14 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
             return {html:`<!doctype html>
             <html>
             <head>
-                <style>#carta{max-width:640px; margin-left:auto; margin-right:auto; padding:20px; border: 0.5px solid blue;}</style>
+                <style>
+                body{margin:0px}
+                #carta{max-width:640px; margin-left:auto; margin-right:auto; padding:20px; background-color:white;}
+                </style>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
             </head>
-            <body><div id=carta>\n${nota[0].contenido.replace(
+            <body>${banner}
+            <div id=carta>\n${nota[0].contenido.replace(
                 '<div id="auto-qr"></div>',
                 `<a href=${urlStr}><div id="auto-qr"><div><img src="${await QRCode.toDataURL(urlStr)}"/></div><div style="font-size:50%">${urlStr}</div></div></a>`
             )}
