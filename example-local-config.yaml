@@ -5,6 +5,7 @@ db:
 server:
   prefix_idafe: dontask
   prefix_idope: dontask
+  mainDomain: http://127.0.0.1:3021
 install:
   table-data-dir:
     - install-example
@@ -12,4 +13,25 @@ devel:
   useFileDevelopment: true
   delay: 400
   cache-content: true
-  forceShowAsEditable: false      
+  forceShowAsEditable: false
+login:
+  forget:
+    urlPath: /forget
+    mailFields: [mail, mail_alternativo]
+mailer:
+  motor: smtp
+  conn:
+    host: smtp.nuestrosvn.com
+    port: 465
+    secure: true
+    auth: 
+      user: cambiar@nuestrosvn.com
+      pass: cambiar
+  mail-info:
+    from: '"Nombre y apellido" <cambiar@nuestrosvn.com>'
+  supervise: 
+    to:
+      - cambiar@cambiar.com
+    event:
+      restart-ok: true
+      restart-fail: true

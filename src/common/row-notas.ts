@@ -4,7 +4,7 @@ import {field, rowDefinition} from "backend-chi";
 
 const campos = {
     nota          : new field.bigint({sequence:true}),
-    denominacion  : new field.text({title:'denominación'}),
+    denominacion  : new field.text({title:'denominación', nullable:false}),
     observaciones : new field.text({}),
     desde         : new field.date({}),
     hasta         : new field.date({}),
