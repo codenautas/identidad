@@ -10,6 +10,7 @@ const campos = {
     hasta         : new field.date({}),
     contenido     : new field.text({}),
     idnota        : new field.text({}),
+    url           : new field.text({inTable:false, clientSide:'displayUrl', serverSide:true, editable:false}),
 }
 
 export const notas = rowDefinition({

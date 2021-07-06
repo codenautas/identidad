@@ -84,7 +84,7 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
             }else if(ahora>nota[0].hasta){
                 ahora = nota[0].hasta
             }
-            var verfique = `Verifique la autenticidad de esta nota con el QR o entrando a:`
+            var verfique = `Verifique la autenticidad de esta nota escaneando el QR o entrando a:`
             return {html:`<!doctype html>
             <html>
             <head>
@@ -134,6 +134,7 @@ export class AppIdentidad extends AppChi{
     }
     override getMenu(context:BP.Context):BP.MenuDefinition{
         var menuContent:BP.MenuInfoBase[]=[
+            {menuType:'table', name:'notas'},
             {menuType:'menu', name:'operativos', selectedByDefault:true, menuContent:[
                 {menuType:'table', name:'operativos'},
                 {menuType:'table', name:'personal'},
