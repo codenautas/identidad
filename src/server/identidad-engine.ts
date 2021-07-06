@@ -72,7 +72,7 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
         return {html:`<h2>${JSON.stringify(afectaciones)}</h2>`}
     }
     async nota({idnota, mainDomain}:{idnota:string, mainDomain:string}){
-        var urlObj=new URL(mainDomain);
+        var urlObj=new URL(mainDomain+'/nota');
         urlObj.search = new URLSearchParams([['idnota', idnota]]).toString()
         var urlStr = urlObj.toString();
         var banner = await fs.readFile('dist/client/unlogged/img/banner.html', 'utf8')
