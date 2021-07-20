@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "Launch Program",
             "preLaunchTask": "build-all",
-            "program": "${workspaceFolder}/dist/server/server-repsic.js",
+            "program": "${workspaceFolder}/dist/server/server/server-identidad.js",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]
@@ -19,7 +19,7 @@
             "request": "launch",
             "name": "dumpDb",
             "preLaunchTask": "build-all",
-            "program": "${workspaceFolder}/dist/server/server-repsic.js",
+            "program": "${workspaceFolder}/dist/server/server/server-identidad.js",
             "args": [
                 "--dump-db"
             ],

@@ -2,7 +2,6 @@ import {strict as likeAr} from "like-ar";
 import * as Path from "path"
 import * as QRCode from 'qrcode';
 import * as json4all from "json4all";
-import * as bestGlobals from "best-globals";
 
 
 import {BackendEngine, AppChi, generateTableDefinition} from "backend-chi";
@@ -17,13 +16,13 @@ import { staticConfigYaml } from "./def-config"
 import { tableUsuarios } from "backend-chi";
 import { tableOperativos } from "./table-operativos";
 import { tableAfectaciones } from "./table-afectaciones";
-import { tableNotas } from "./table-notas";
+import { tableVariantes } from "./table-variantes";
 import { URL, URLSearchParams } from "url";
 import { promises as fs } from "fs";
 
 var table = {
     ...dataSetRow,
-    notas: tableNotas,
+    variantes: tableVariantes,
     operativos: tableOperativos,
     afectaciones: tableAfectaciones,
     usuarios: tableUsuarios,
@@ -71,19 +70,17 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
         var afectaciones = await this.getTableData(table.afectaciones, [{fieldName:'idafe', value:idafe}]);
         return {html:`<h2>${JSON.stringify(afectaciones)}</h2>`}
     }
-    async nota({idnota, mainDomain}:{idnota:string, mainDomain:string}){
+    async nota({idv, mainDomain}:{idv:string, mainDomain:string}){
         var urlObj=new URL(mainDomain+'/nota');
-        urlObj.search = new URLSearchParams([['idnota', idnota]]).toString()
+        urlObj.search = new URLSearchParams([['idv', idv]]).toString()
         var urlStr = urlObj.toString();
         var banner = await fs.readFile('dist/client/unlogged/img/banner.html', 'utf8')
         try{
-            var ahora = bestGlobals.date.today();
-            var nota = await this.getTableData(table.notas, [{fieldName:'idnota', value:idnota}]);
-            if(ahora < nota[0].desde){
-                ahora = nota[0].desde;
-            }else if(ahora>nota[0].hasta){
-                ahora = nota[0].hasta
-            }
+            var variante = await this.getTableData(table.variantes, [{fieldName:'idv', value:idv}]);
+            var nv=variante[0];
+            var ahora = nv.fecha;
+            var destinatario = nv.destinatario || nv.notas__destinatario;
+            var domicilio2 = nv.domicilio2 || 'Ciudad de Buenos Aires';
             var verfique = `Verifique la autenticidad de esta nota escaneando el QR o entrando a:`
             return {html:`<!doctype html>
             <html>
@@ -95,13 +92,17 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
             </head>
             <body>${banner}
-            <div id=carta>\n${nota[0].contenido.replace(
+            <div id=carta>\n${nv.notas__contenido.replace(
                 '<div id="auto-qr"></div>',
                 `<div id="auto-qr"><div><img src="${await QRCode.toDataURL(urlStr, {margin:2})}"/></div><div style="font-size:50%"><div>${verfique}</div><div><a href=${urlStr}>${urlStr}</a></div></div></div>`
-            ).replace(`<span id="fecha"></span>`,`<span id="fecha">${ahora.toLocaleDateString()}</span>`)}
-            </div></body>`}
+            )
+            .replace(`<span id="fecha"></span>`,ahora?`<span id="fecha">${ahora.toLocaleDateString()}</span>`:``)
+            .replace(`<div id="destinatario"></div>`,destinatario?`<div id="destinatario">${destinatario}</div>`:``)
+            .replace(`<div id="domicilio"></div>`,nv.domicilio?`<div id="domicilio">${nv.domicilio}</div>`:``)
+            .replace(`<div id="domicilio2"></div>`,nv.domicilio?`<div id="domicilio2">${nv.codpos?`<span id="codpos">${nv.codpos}</span> - `:``} <span id="localidad">${domicilio2}</span></div>`:``)
+            }</div></body>`}
         }catch(err){
-            console.log('RECURSO NO ENCONTRADO',idnota,err)
+            console.log('RECURSO NO ENCONTRADO',idv,err)
             return this.error404();
         }
     }

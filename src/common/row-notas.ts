@@ -6,11 +6,8 @@ const campos = {
     nota          : new field.bigint({sequence:true}),
     denominacion  : new field.text({title:'denominación', nullable:false}),
     observaciones : new field.text({}),
-    desde         : new field.date({}),
-    hasta         : new field.date({}),
     contenido     : new field.text({}),
-    idnota        : new field.text({}),
-    url           : new field.text({inTable:false, clientSide:'displayUrl', serverSide:true, editable:false}),
+    destinatario  : new field.text({}),
 }
 
 export const notas = rowDefinition({

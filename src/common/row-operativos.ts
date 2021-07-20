@@ -1,5 +1,5 @@
 "use strict";
-import {field, relatedField, rowDefinition} from "backend-chi"; 
+import {field, foreignKeyField, rowDefinition} from "backend-chi"; 
 import {notas} from "./row-notas";
 
 const campos = {
@@ -7,7 +7,7 @@ const campos = {
     denominacion  : new field.text({}),
     desde         : new field.date({}),
     hasta         : new field.date({}),
-    nota          : relatedField(notas.field.nota,{registerAsDetail:{abr:'N'}}),
+    nota          : foreignKeyField(notas.field.nota,{registerAsDetail:{abr:'N'}}),
     idope         : new field.text({})
 }
 
