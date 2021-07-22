@@ -106,11 +106,19 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
             return this.error404();
         }
     }
+    async lote({nota, lote, mainDomain}:{nota:number, lote:number, mainDomain:string}){
+        return {html:`<!doctype html>
+            <h1> Carátula de impresión de notas. Nota ${nota}. LOTE ${lote}</h1>
+            <div> ${mainDomain} </div>
+            `
+        }
+    }
     override getUnloggedServices(){
         return {
             error404:{coreFunction:(_:any)     =>this.error404()      },
             verifid :{coreFunction:(params:any)=>this.verifid (params)},
-            nota    :{coreFunction:(params:any)=>this.nota    (params), addParam:{mainDomain:true}}
+            nota    :{coreFunction:(params:any)=>this.nota    (params), addParam:{mainDomain:true}},
+            lote    :{coreFunction:(params:any)=>this.lote    (params), addParam:{mainDomain:true}}
         }
     }
 }

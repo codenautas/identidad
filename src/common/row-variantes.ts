@@ -4,7 +4,7 @@ import {notas} from "./row-notas";
 import {field, rowDefinition, foreignKeyField, foreignField} from "backend-chi"; 
 
 const campos = {
-    nota          : foreignKeyField(notas.field.nota,{registerAsDetail:{abr:'A'}}),
+    nota          : foreignKeyField(notas.field.nota,{registerAsDetail:{abr:'V'}}),
     lote          : new field.bigint({}),
     orden         : new field.bigint({}),
     observaciones : new field.text({}),
