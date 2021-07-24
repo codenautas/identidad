@@ -112,8 +112,8 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
     }
     override getUnloggedServices(){
         return {
-            verifid :{coreFunction:(params:any)=>this.verifid (params)},
-            nota    :{coreFunction:(params:any)=>this.nota    (params), addParam:{mainDomain:true}},
+            verifid :{coreFunction:(params:any)=>this.verifid (params), public:true},
+            nota    :{coreFunction:(params:any)=>this.nota    (params), addParam:{mainDomain:true}, public:true},
             lote    :{coreFunction:(params:any)=>this.lote    (params), addParam:{mainDomain:true}}
         }
     }
