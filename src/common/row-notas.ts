@@ -1,6 +1,6 @@
 
 "use strict";
-import {field, rowDefinition} from "backend-chi"; 
+import {field, rowDefinition} from "boconccino"; 
 
 const campos = {
     nota          : new field.bigint({sequence:true}),

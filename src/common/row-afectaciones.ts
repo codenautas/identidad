@@ -1,5 +1,5 @@
 "use strict";
-import {field, foreignKeyField, rowDefinition} from "backend-chi"; 
+import {field, foreignKeyField, rowDefinition} from "boconccino"; 
 import {operativos} from "./row-operativos";
 import {personal} from "./row-personal";
 

@@ -1,7 +1,7 @@
 
 "use strict";
-// import { field } from "backend-chi"; 
-import { tableDefinition } from "backend-chi"
+// import { field } from "boconccino"; 
+import { tableDefinition } from "boconccino"
 import { lotes } from "../common/row-lotes"
 import {TableDefinition, TableContext} from "backend-plus";
 

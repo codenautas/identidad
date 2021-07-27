@@ -1,6 +1,6 @@
 "use strict";
-// import { field } from "backend-chi"; 
-import { tableDefinition } from "backend-chi"
+// import { field } from "boconccino"; 
+import { tableDefinition } from "boconccino"
 import { operativos } from "../common/row-operativos"; 
 import {TableDefinition, TableContext} from "backend-plus";
 

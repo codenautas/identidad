@@ -4,7 +4,7 @@ import * as QRCode from 'qrcode';
 import * as json4all from "json4all";
 
 
-import {BackendEngine, AppChi, generateTableDefinition} from "backend-chi";
+import {BackendEngine, AppChi, generateTableDefinition} from "boconccino";
 import {
     IdentidadEngineBase, SessionBase
 } from "../common/info-identidad"
@@ -13,7 +13,7 @@ import {dataSetRow} from "../common/info-identidad";
 import * as BP from "backend-plus";
 import { staticConfigYaml } from "./def-config"
 
-import { tableUsuarios } from "backend-chi";
+import { tableUsuarios } from "boconccino";
 import { tableOperativos } from "./table-operativos";
 import { tableAfectaciones } from "./table-afectaciones";
 import { tableLotes } from "./table-lotes";

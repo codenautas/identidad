@@ -1,5 +1,5 @@
 "use strict";
-import {field, rowDefinition} from "backend-chi"; 
+import {field, rowDefinition} from "boconccino"; 
 
 export const campos = {
     cuit          : new field.text({}),

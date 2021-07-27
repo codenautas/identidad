@@ -7,7 +7,7 @@
     "dist"
   ],
   "dependencies": {
-    "backend-chi": "^0.1.5",
+    "boconccino": "^0.1.5",
     "backend-plus": "^1.10.17",
     "best-globals": "~0.10.32",
     "frontend-chi": "^0.1.1",

@@ -1,7 +1,7 @@
 
 "use strict";
 import {notas} from "./row-notas";
-import {field, rowDefinition, foreignKeyField, foreignField} from "backend-chi"; 
+import {field, rowDefinition, foreignKeyField, foreignField} from "boconccino"; 
 
 const campos = {
     nota          : foreignKeyField(notas.field.nota,{registerAsDetail:{abr:'V'}}),
