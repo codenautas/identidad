@@ -16,6 +16,7 @@ const campos = {
     idv           : new field.text({}),
     url           : new field.text({inTable:false, clientSide:'displayUrl', serverSide:true, editable:false}),
     alternativa   : new field.text({}),
+    confirmada    : new field.boolean({nullable:false, default:false}),
     notas__contenido   : foreignField(notas.field.contenido   ,{}),
     notas__destinatario: foreignField(notas.field.destinatario,{}),
 }

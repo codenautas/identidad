@@ -8,6 +8,7 @@ const campos = {
     observaciones : new field.text({}),
     contenido     : new field.text({}),
     destinatario  : new field.text({}),
+    confirmada    : new field.boolean({nullable:false, default:false}),
 }
 
 export const notas = rowDefinition({

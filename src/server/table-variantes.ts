@@ -7,6 +7,12 @@ import {TableDefinition, TableContext} from "backend-plus";
 
 export const tableVariantes = tableDefinition(
     variantes, {}, {
+        sql:{
+            policies:{
+                all   :{using:'not confirmada', check:'true'},
+                select:{using:'true'}
+            },
+        },
         dynamicAdapt:(tableDef:TableDefinition, context:TableContext)=>{
             var {be} = context;
             var idvField = tableDef.fields.find(field=>field.name=='idv')!;

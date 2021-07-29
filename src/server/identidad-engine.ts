@@ -20,9 +20,11 @@ import { tableLotes } from "./table-lotes";
 import { tableVariantes } from "./table-variantes";
 import { URL, URLSearchParams } from "url";
 import { promises as fs } from "fs";
+import { tableNotas } from "./table-notas";
 
 var table = {
     ...dataSetRow,
+    notas: tableNotas,
     lotes: tableLotes,
     variantes: tableVariantes,
     operativos: tableOperativos,
@@ -98,6 +100,7 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
         .replace(`<div id="destinatario"></div>`,destinatario?`<div id="destinatario">${destinatario}</div>`:``)
         .replace(`<div id="domicilio"></div>`,nv.domicilio?`<div id="domicilio">${nv.domicilio}</div>`:``)
         .replace(`<div id="domicilio2"></div>`,nv.domicilio?`<div id="domicilio2">${nv.codpos?`<span id="codpos">${nv.codpos}</span> - `:``} <span id="localidad">${domicilio2}</span></div>`:``)
+        .replace('${alternativa}',nv.alternativa)
         }</div></body>`}
     }
     async lote({nota, lote, mainDomain}:{nota:number, lote:number, mainDomain:string}){
