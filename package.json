@@ -1,13 +1,13 @@
 {
   "name": "identidad",
-  "version": "0.1.6b",
+  "version": "0.1.7",
   "description": "El QR, la carta y el Id",
   "main": "dist/server/server/server-identidad.js",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "backend-chi": "^0.1.6",
+    "backend-chi": "^0.1.7",
     "backend-plus": "^1.10.18",
     "best-globals": "~0.10.32",
     "frontend-chi": "^0.1.1",
@@ -27,11 +27,11 @@
     "webpack-cli": "^4.7.2"
   },
   "devDependencies": {
-    "@material-ui/core": "~4.12.2",
+    "@material-ui/core": "~4.12.3",
     "@material-ui/icons": "~4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@types/mocha": "^9.0.0",
-    "@types/node": "^16.4.7",
+    "@types/node": "^16.4.8",
     "@types/qrcode": "^1.4.1",
     "@types/react": "^17.0.15",
     "@types/react-dom": "^17.0.9",
