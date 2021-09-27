@@ -2,7 +2,7 @@
 import {field, rowDefinition} from "backend-chi"; 
 
 export const campos = {
-    cuit          : new field.text({}),
+    cuil          : new field.text({}),
     nombres       : new field.text({isName:true}),
     apellido      : new field.text({isName:true}),
     documento_tipo: new field.text({default:'DNI'}),
@@ -10,6 +10,7 @@ export const campos = {
     telefono      : new field.text({title:'teléfono'}),
     mail          : new field.text({}),
     mail_alternativo: new field.text({}),
+    foto          : new field.text({}),
 }
 
 export const personal = rowDefinition({
@@ -17,5 +18,5 @@ export const personal = rowDefinition({
     elementName:'persona',
     editable:true,
     field:campos,
-    primaryKey:['cuit']
+    primaryKey:['cuil']
 });

@@ -11,7 +11,7 @@ export const tableAfectaciones = tableDefinition(
     afectaciones, campos, {
         dynamicAdapt:(tableDef:TableDefinition, context:TableContext)=>{
             var idafeField = tableDef.fields.find(field=>field.name=='idafe')!;
-            idafeField.generatedAs = `(translate(encode(digest(${context.be.db.quoteLiteral(context.be.config.server.prefix_idafe)}||operativo||'-'||cuit, 'sha1'), 'base64'),'+/=','_.'))`
+            idafeField.generatedAs = `(translate(encode(digest(${context.be.db.quoteLiteral(context.be.config.server.prefix_idafe)}||operativo||'-'||cuil, 'sha1'), 'base64'),'+/=','_.'))`
             return tableDef;
         }
     },

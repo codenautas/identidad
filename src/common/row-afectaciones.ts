@@ -5,7 +5,7 @@ import {personal} from "./row-personal";
 
 const campos = {
     operativo     : foreignKeyField(operativos.field.operativo,{registerAsDetail:{abr:'A'}}),
-    cuit          : foreignKeyField(personal.field.cuit,{registerAsDetail:{abr:'A'}}),
+    cuil          : foreignKeyField(personal.field.cuil,{registerAsDetail:{abr:'A'}}),
     desde         : new field.date({}),
     hasta         : new field.date({}),
     observaciones : new field.text({}),
@@ -16,7 +16,7 @@ export const afectaciones = rowDefinition({
     name:'afectaciones',
     elementName:'afectación',
     field:campos,
-    primaryKey:['operativo', 'cuit'],
+    primaryKey:['operativo', 'cuil'],
     editable:true,
 })
 

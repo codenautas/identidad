@@ -4,7 +4,7 @@ import * as QRCode from 'qrcode';
 import * as json4all from "json4all";
 
 
-import {BackendEngine, AppChi, generateTableDefinition} from "backend-chi";
+import {BackendEngine, AppChi, generateTableDefinition, StaticContentObject } from "backend-chi";
 import {
     IdentidadEngineBase, SessionBase
 } from "../common/info-identidad"
@@ -38,6 +38,8 @@ export class SessionData extends SessionBase{
 
 var _typeBackendEngine:BackendEngine;
 
+// .replace('<div id="auto-qr"></div>', `<div id="auto-qr"><div><img src="${await QRCode.toDataURL(urlStr, { margin: 2 })}"/></div><div style="font-size:50%"><div>${verfique}</div><div><a href=${urlStr}>${urlStr}</a></div></div></div>`)
+                
 export class IdentidadEngine extends BackendEngine implements IdentidadEngineBase{
     async getSession(session:SessionData){
         return session;
@@ -71,7 +73,7 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
         var afectaciones = await this.getTableData(table.afectaciones, [{fieldName:'idafe', value:idafe}]);
         return {html:`<h2>${JSON.stringify(afectaciones)}</h2>`}
     }
-    async nota({idv, mainDomain}:{idv:string, mainDomain:string}){
+    async nota({idv, mainDomain, devel}:{idv:string, mainDomain:string, devel:boolean}){
         var urlObj=new URL(mainDomain+'/nota');
         urlObj.search = new URLSearchParams([['idv', idv]]).toString()
         var urlStr = urlObj.toString();
@@ -81,13 +83,15 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
         var ahora = nv.fecha;
         var destinatario = nv.destinatario || nv.notas__destinatario;
         var domicilio2 = nv.domicilio2 || 'Ciudad de Buenos Aires';
+        var orden=Number(nv.alternativa?.match(/^\d+/)?.[0])||1;
+        var confirmada = nv.confirmada && nv.notas__confirmada;
         var verfique = `Verifique la autenticidad de esta nota escaneando el QR o entrando a:`
         return {html:`<!doctype html>
         <html>
         <head>
             <style>
             body{margin:0px}
-            #carta{max-width:640px; margin-left:auto; margin-right:auto; padding:20px; background-color:white;}
+            #carta{max-width:640px; margin-left:auto; margin-right:auto; padding:20px; background-color:white; position:relative}
             </style>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
@@ -101,7 +105,11 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
         .replace(`<div id="domicilio"></div>`,nv.domicilio?`<div id="domicilio">${nv.domicilio}</div>`:``)
         .replace(`<div id="domicilio2"></div>`,nv.domicilio?`<div id="domicilio2">${nv.codpos?`<span id="codpos">${nv.codpos}</span> - `:``} <span id="localidad">${domicilio2}</span></div>`:``)
         .replace('${alternativa}',nv.alternativa)
-        }</div></body>`}
+        .replace(/ orden="(\d+)\/(\d+)"/g, (_all:string, num:number, den:number)=>{
+            var pos = (num - 1 + orden) % den
+            return `orden="${pos}"`;
+        })
+        }${confirmada && !devel?'':`<div id="marca_no_confirmada">${!confirmada?'BORRADOR':'TESTING'}</div>`}</div></body>`}
     }
     async lote({nota, lote, mainDomain}:{nota:number, lote:number, mainDomain:string}){
         var lotes = await this.getTableData(table.lotes, [{fieldName:'nota', value:nota},{fieldName:'lote', value:lote}]);
@@ -116,9 +124,15 @@ export class IdentidadEngine extends BackendEngine implements IdentidadEngineBas
     override getUnloggedServices(){
         return {
             verifid :{coreFunction:(params:any)=>this.verifid (params), public:true},
-            nota    :{coreFunction:(params:any)=>this.nota    (params), addParam:{mainDomain:true}, public:true},
-            lote    :{coreFunction:(params:any)=>this.lote    (params), addParam:{mainDomain:true}}
+            nota    :{coreFunction:(params:any)=>this.nota    (params), addParam:{mainDomain:true, devel:true}, public:true},
+            lote    :{coreFunction:(params:any)=>this.lote    (params), addParam:{mainDomain:true, devel:true}},
         }
+    }
+    override getStaticContent(){
+        var contentDef: StaticContentObject = {
+            attachs :{public:true, args:['local-attachments/img',{allowedExts:['xlsx', 'png', 'jpg', 'jpeg', 'gif']}]}
+        }
+        return contentDef;
     }
 }
 
