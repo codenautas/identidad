@@ -22,6 +22,7 @@ const campos = {
     notas__destinatario: foreignField(notas.field.destinatario,{}),
     notas__confirmada  : foreignField(notas.field.confirmada  ,{}),
     cuil          : foreignKeyField(personal.field.cuil,{registerAsDetail:{abr:'N'}}),
+    funcion       : new field.text({title:'función'}),
     personal__documento_tipo:  foreignField(personal.field.documento_tipo ,{}),
     personal__documento_nro :  foreignField(personal.field.documento_nro  ,{}),
     personal__apellido      :  foreignField(personal.field.apellido       ,{}),
